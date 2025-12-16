@@ -34,7 +34,7 @@ export function HeroSection() {
         <CarouselItem className="">
           <div className="">
             <Card
-              className="h-172 bg-cover "
+              className="h-172 max-w-dvw bg-cover"
               style={{
                 backgroundImage: `linear-gradient(
         rgba(0,0,0,0.45),

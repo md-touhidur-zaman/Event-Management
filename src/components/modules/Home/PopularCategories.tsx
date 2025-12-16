@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Activity, Music, Paintbrush, Trophy, User, Users, Utensils } from "lucide-react";
+import { Activity, Music, Paintbrush, Trophy, Users, Utensils } from "lucide-react";
 
 export default function PopularCategories() {
   return (

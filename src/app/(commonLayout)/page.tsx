@@ -1,3 +1,4 @@
+import Counter from "@/components/modules/Home/Counter";
 import FeatureEvents from "@/components/modules/Home/FeatureEvents";
 import { HeroSection } from "@/components/modules/Home/HeroSection";
 import HowItWork from "@/components/modules/Home/HowItWork";
@@ -17,6 +18,10 @@ export default function HomePage() {
       </div>
       <div className="container mx-auto space-y-20 p-2 md:p-0">
         <TopHosts/>
+      </div>
+
+      <div>
+        <Counter/>
       </div>
     </div>
   );

@@ -85,7 +85,6 @@ const TopHosts = () => {
           </CardContent>
         </Card>
 
-
         <Card
           className="max-w-dvw border-2 shadow-2xl"
         >
@@ -102,12 +101,7 @@ const TopHosts = () => {
                     <p className="flex items-center gap-2"><Star className="text-yellow-400"/> 4.7</p>
                     <p className="font-bold"> 210 Events</p>
                 </div>
-
-
-
             </div>
-
-            
           </CardContent>
         </Card>
       </div>

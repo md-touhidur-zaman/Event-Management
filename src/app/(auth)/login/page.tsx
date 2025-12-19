@@ -17,7 +17,7 @@ export default function LoginPage() {
         </div>
 
         <div className="text-center">
-          <small>If you are not register, Please <Link href="/register" className="text-blue-500 underline">Register</Link></small>
+          <small>Don&apos;t have an account, Please <Link href="/register" className="text-[#DC143C] underline">Register</Link></small>
         </div>
       </div>
     </div>

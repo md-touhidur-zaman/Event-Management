@@ -1,5 +1,8 @@
+import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import jwt, { JwtPayload } from "jsonwebtoken"
+
 
 type UserRole = "USER" | "ADMIN" | "HOST"
 
@@ -33,7 +36,7 @@ const adminProtectedRoutes: RouteConfig = {
 const isAuthRoute = (pathname: string)=>{
     return authRoutes.some((route)=> route === pathname)
 }
-
+ 
 const isRouteMatches = (pathname: string, routes: RouteConfig) =>{
     if(routes.exact.includes(pathname)){
         return true
@@ -63,7 +66,7 @@ const getRouteOwner = (pathname: string) : "USER" |"HOST"|"ADMIN"|"COMMON"|"PUBL
 
 
 const getDefaultDashboardRoutes = (role: string) =>{
-    if(role==="user"){
+    if(role==="USER"){
         return "/dashboard"
     }
     if(role==="ADMIN"){
@@ -76,9 +79,31 @@ const getDefaultDashboardRoutes = (role: string) =>{
 }
  
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
+    const cookieStore = await cookies()
     const pathname = request.nextUrl.pathname 
-    console.log(pathname)
+    
+    const accessToken = request.cookies.get("accessToken")?.value || null
+
+    let userRole: UserRole| null = null 
+
+    if(accessToken){
+        const verifiedToken: JwtPayload | string = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET_KEY as string)
+        if(typeof verifiedToken === "string"){
+            cookieStore.delete("accessToken")
+            cookieStore.delete("refreshToken")
+            return NextResponse.redirect(new URL("/login", request.url))
+        }
+
+        userRole = verifiedToken.role
+    }
+
+    const isAuth = isAuthRoute(pathname)
+
+    if(accessToken && isAuth){
+        return NextResponse.redirect(new URL(getDefaultDashboardRoutes(userRole as string), request.url))
+    }
+
   return NextResponse.next()
 }
  

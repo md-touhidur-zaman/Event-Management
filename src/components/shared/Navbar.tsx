@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/popover";
 import Link from "next/link";
 import Logo from "../../../public/assets/logo/Logo";
+import { getCookie } from "@/lib/tokenHandler";
+import LogoutButton from "../LogoutButton";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -19,9 +21,10 @@ const navigationLinks = [
   { href: "/explore-events", label: "Explore Events" },
 ];
 
-export default function Navbar() {
+export default async function Navbar() {
+  const accessToken = await getCookie("accessToken");
   return (
-    <header className="border-b px-4 md:px-6">
+    <header className="border-b px-4 md:px-6 container mx-auto">
       <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
@@ -103,7 +106,13 @@ export default function Navbar() {
               {navigationLinks.map((link) => (
                 <NavigationMenuItem key={link.label}>
                   {/* <NavigationMenuLink className=" font-medium text-muted-foreground hover:text-primary"> */}
-                    <Link href={link.href} className="font-medium text-muted-foreground hover:text-primary"> {link.label}</Link>
+                  <Link
+                    href={link.href}
+                    className="font-medium text-muted-foreground hover:text-primary"
+                  >
+                    {" "}
+                    {link.label}
+                  </Link>
                   {/* </NavigationMenuLink> */}
                 </NavigationMenuItem>
               ))}
@@ -112,11 +121,26 @@ export default function Navbar() {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-2">
-          <Button asChild className="text-sm" variant="outline">
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button className="text-sm">Become a host</Button>
+        <div >
+          {accessToken ? (
+            <div className="flex items-center gap-2">
+              <LogoutButton/>
+              <Button
+                className="text-sm cursor-pointer"
+                disabled={!accessToken}
+              >
+                Become a host
+              </Button>
+            </div>
+          ) : (
+            <Button
+              asChild
+              className="text-sm cursor-pointer"
+              variant="outline"
+            >
+              <Link href="/login">Login</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>

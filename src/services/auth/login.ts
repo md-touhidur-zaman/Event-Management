@@ -1,10 +1,10 @@
 "use server"
 
-import { cookies } from "next/headers"
 import z from "zod"
 import jwt, { JwtPayload } from "jsonwebtoken"
 import { getDefaultDashboardRoutes, isValidRedirectForRole, UserRole } from "@/lib/auth-utils"
 import { redirect } from "next/navigation"
+import { setCookie } from "@/lib/tokenHandler"
 
 const loginFormZodSchema = z.object({
     email: z.email({error: "Invalid Email Address"}),
@@ -42,19 +42,16 @@ export const loginUser = async(_currentState: any, formData: any) =>{
             body: JSON.stringify(loginPayload)
         }).then((res)=>res.json())
 
-
-        const cookiesStore = await cookies()
-
-        cookiesStore.set("accessToken", res.data?.userTokens?.accessToken, {
+       await setCookie("accessToken",res.data?.userTokens?.accessToken, {
             httpOnly:true,
             secure:true,
             sameSite: "none"
-        })
-        cookiesStore.set("refreshToken", res.data?.userTokens?.refreshToken, {
+        } )
+        await setCookie("refreshToken",res.data?.userTokens?.refreshToken, {
             httpOnly:true,
             secure:true,
             sameSite: "none"
-        })
+        } )
 
         const verifiedToken: JwtPayload | string = jwt.verify(res.data?.userTokens?.accessToken, process.env.JWT_ACCESS_SECRET_KEY as string)
 
@@ -78,17 +75,11 @@ export const loginUser = async(_currentState: any, formData: any) =>{
         }
         
         
-
- 
-
-        return res
-        
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
-        console.log(error)
         return {error: "Login Failed"}
         
         

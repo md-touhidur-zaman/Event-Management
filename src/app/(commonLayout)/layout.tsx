@@ -8,16 +8,14 @@ export default function CommonLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <div className="container mx-auto">
+    <div className="">
+      <div className="sticky top-0 bg-white z-40 ">
         <Navbar />
       </div>
-      <div className="min-h-dvh">
-        {children}
-      </div>
+      <div className="min-h-dvh">{children}</div>
       <div>
         <Footer />
       </div>
-    </>
+    </div>
   );
 }

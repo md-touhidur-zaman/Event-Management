@@ -16,7 +16,7 @@ export default function Footer() {
           >
             <Logo />
             <h1 className="text-xl font-bold text-[#DC143C] hidden lg:inline-block">
-              <span className="text-[#111827]">Event</span> Management
+              <span className="text-white">Event</span> Management
             </h1>
           </Link>
 

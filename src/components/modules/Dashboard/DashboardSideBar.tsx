@@ -21,7 +21,7 @@ export async function DashboardSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   const userInfo = await getUserInfo();
-  const navItems = getSidebarItemsByRole(userInfo?.role);
+  const navItems = await getSidebarItemsByRole(userInfo?.role);
 
   const data = {
     navMain: navItems,

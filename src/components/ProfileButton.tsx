@@ -13,7 +13,7 @@ import {
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 
-export default  function ProfileButton({name,dashboardHome} : {name: string, dashboardHome:string} ) {
+export default  function ProfileButton({name,dashboardHome, role} : {name: string, dashboardHome:string, role: string} ) {
     
   
   return (
@@ -23,6 +23,7 @@ export default  function ProfileButton({name,dashboardHome} : {name: string, das
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel className="text-lg text-[#DC143C]">Welcome {name}</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-sm text-[#111827] font-bold"><small>{role}</small></DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
         >

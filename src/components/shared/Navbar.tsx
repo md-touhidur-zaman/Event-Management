@@ -136,7 +136,7 @@ export default async function Navbar() {
               >
                 Become a host
               </Button>
-              <ProfileButton name={userInfo?.name ? userInfo?.name : "Unknown User"} dashboardHome={dashboardHome}/>
+              <ProfileButton name={userInfo?.name ? userInfo?.name : "Unknown User"} role={userInfo?.role} dashboardHome={dashboardHome}/>
             </div>
           ) : (
             <Button

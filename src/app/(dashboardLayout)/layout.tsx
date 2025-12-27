@@ -1,4 +1,4 @@
-import { DashboardSidebar } from "@/components/modules/Dashboar/DashboardSideBar"
+import { DashboardSidebar } from "@/components/modules/Dashboard/DashboardSideBar"
 import { Separator } from "@/components/ui/separator"
 import {
   SidebarInset,

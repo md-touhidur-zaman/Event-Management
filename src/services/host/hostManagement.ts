@@ -28,8 +28,6 @@ export const createEvent = async(_currentState:any, formData:any):Promise<any> =
 
     const res = await serverFetch.post("/event/create-event", {
         body: newEventFormData,
-        
-
     }).then((res)=> res.json())
 
     return res
@@ -44,4 +42,18 @@ export const createEvent = async(_currentState:any, formData:any):Promise<any> =
     }
 
 
+}
+
+export const getPublishedEvents = async()=>{
+    try {
+        const res= await serverFetch.get("/host/published-event", {
+            next: {
+                tags: ["Events"]
+            }
+        }).then((res)=>res.json())
+        return res
+        
+    } catch (error: any) {
+        return error?.message
+    }
 }

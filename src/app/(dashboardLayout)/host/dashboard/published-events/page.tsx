@@ -1,11 +1,12 @@
+import AllPublishedEventCard from '@/components/modules/Dashboard/Host/AllPublishedEventCard'
 import SearchBar from '@/components/modules/Dashboard/Host/SearchBar'
-import { serverFetch } from '@/lib/server-fetch'
+import { getPublishedEvents } from '@/services/host/hostManagement'
+import { IEvent } from '@/types/host.interface'
 
 
 export default async function PublishedEventsPage() {
-  const res = await serverFetch.get("/host/published-event").then((res)=>res.json())
-
-  console.log(res)
+  const {data} = await getPublishedEvents()
+  const allPublishedEvents = data?.events
 
   return (
     <div className='space-y-5 container mx-auto'>
@@ -13,7 +14,10 @@ export default async function PublishedEventsPage() {
       <p>Manage and monitor all your events.</p>
       <SearchBar/>
 
-      <div>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
+        {
+          allPublishedEvents && allPublishedEvents.map((event: IEvent)=> <AllPublishedEventCard event={event} key={event?._id}/>)
+        }
 
       </div>
 

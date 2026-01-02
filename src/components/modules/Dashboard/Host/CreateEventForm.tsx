@@ -63,8 +63,6 @@ export default function CreateEventForm() {
     redirect("/host/dashboard/published-events");
   }
 
-  console.log(state)
-
   return (
     <form action={(formData) => onSubmit(formData)}>
       <FieldSet>
@@ -321,11 +319,11 @@ export default function CreateEventForm() {
           variant={"outline"}
           type="submit"
         >
-          <Plus />
+          
           {isPending ? (
-            <Loader className="text-[#DC143C] animate-spin" />
+            <Loader className="text-white animate-spin" />
           ) : (
-            "Create Event"
+           <p className="flex items-center gap-2"><Plus /> Create Event</p>
           )}
         </Button>
       </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import DeleteModal from "@/components/DeleteModal";
 import EventDetailsModal from "@/components/EventDetailsModal";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,7 @@ import { useState } from "react";
 
 export default function AllPublishedEventCard({ event }: { event: IEvent }) {
   const [open, setOpen] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   return (
     <>
       <Card>
@@ -67,13 +69,18 @@ export default function AllPublishedEventCard({ event }: { event: IEvent }) {
                 <Pencil />
               </Button>
             </Link>
-            <Button className="font-bold cursor-pointer" variant={"outline"}>
+            <Button onClick={()=>setOpenDeleteModal(true)} className="font-bold cursor-pointer" variant={"outline"}>
               <Trash />
             </Button>
           </div>
         </CardFooter>
       </Card>
       <EventDetailsModal open={open} setOpen={setOpen} event={event} />
+      <DeleteModal
+        openDeleteModal={openDeleteModal}
+        setOpenDeleteModal={setOpenDeleteModal}
+        event={event}
+      />
     </>
   );
 }

@@ -1,8 +1,8 @@
 "use server"
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-
 import { serverFetch } from "@/lib/server-fetch";
+import { revalidateTag } from "next/cache";
 
 export const createEvent = async (
   _currentState: any,
@@ -95,3 +95,25 @@ export const updateEvent = async (_currentState: any, formData: FormData):Promis
     };
   }
 };
+
+
+export const deleteEvent = async(eventId:string) =>{
+  try {
+
+    const res = await serverFetch.delete(`/event/delete/${eventId}`).then((res)=>res.json())
+
+    if(res.success === true){
+      revalidateTag("Events", {expire: 0})
+    }
+
+    return res
+    
+  } catch (error: any) {
+    return {
+      success:false,
+      message: error?.message
+    }
+    
+  }
+
+}

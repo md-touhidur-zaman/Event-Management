@@ -10,7 +10,7 @@ import { Dispatch, SetStateAction } from "react";
 
 
 
-export default function SingleImageUploader({setImage}: {setImage: Dispatch<SetStateAction<File | null>>}) {
+export default function SingleImageUploader({setImage}: {setImage: Dispatch<SetStateAction<File |null>>}) {
   const maxSizeMB = 5;
   const maxSize = maxSizeMB * 1024 * 1024; 
   const [
@@ -31,6 +31,7 @@ export default function SingleImageUploader({setImage}: {setImage: Dispatch<SetS
 
   const previewUrl = files[0]?.preview || null;
 
+  
   useEffect(()=>{
     if(files.length>0){
       setImage(files[0].file as File)

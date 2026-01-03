@@ -25,7 +25,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { createEvent } from "@/services/host/hostManagement";
+import { updateEvent } from "@/services/host/hostManagement";
+import { IEvent } from "@/types/host.interface";
 import { format } from "date-fns";
 import {
   Calendar1Icon,
@@ -33,7 +34,6 @@ import {
   DollarSign,
   Loader,
   MapPin,
-  Plus,
   Type,
   Users,
 } from "lucide-react";
@@ -41,30 +41,31 @@ import { redirect } from "next/navigation";
 import { useActionState, useState } from "react";
 import { toast } from "sonner";
 
-export default function CreateEventForm() {
-  const [date, setDate] = useState<Date>();
-  const [image, setImage] = useState< File | null>(null);
+export default function UpdateEventForm({ event }: { event: IEvent }) {
+  const [date, setDate] = useState<Date>(new Date(event?.date));
+  const [image, setImage] = useState<File | null>(null);
 
-  const [state, formAction, isPending] = useActionState(createEvent, null);
+  const [state, formAction, isPending] = useActionState(updateEvent, null);
 
-  const onSubmit = (formData: FormData) => {
-    if (date) {
-      formData.append("event_date", date.toISOString());
+  const manageImage  = (formData:FormData) =>{
+    if(image){
+      formData.append("image",image)
     }
-    if (image) {
-      formData.append("image", image);
-    }
+    formAction(formData)
+  }
 
-    formAction(formData);
-  };
-
-  if (state?.success) {
-    toast.success("Your event has been published");
-    redirect("/host/dashboard/published-events");
+  if(state && state?.success === true) {
+    toast.success("Your event successfully updated")
+    redirect("/host/dashboard/published-events")
+  }
+  if(state && state?.success === false){
+    toast.error(state?.message)
   }
 
   return (
-    <form action={(formData) => onSubmit(formData)}>
+    <form action={(formData)=> manageImage(formData)}>
+      <input value={event?._id} type="hidden" name="_id" />
+      <input type="hidden" name="event_date" value={date.toISOString()} />
       <FieldSet>
         <FieldGroup className="space-y-10">
           <div className="border-2 border-muted px-5 py-10 space-y-3 inset-shadow-2xs rounded-lg">
@@ -89,6 +90,7 @@ export default function CreateEventForm() {
                   name="title"
                   type="text"
                   placeholder="E.g. Annual Tech Conference 2026"
+                  defaultValue={event?.title}
                 />
               </div>
             </Field>
@@ -101,7 +103,7 @@ export default function CreateEventForm() {
                 >
                   Category
                 </FieldLabel>
-                <Select name="category">
+                <Select name="category" defaultValue={event?.category}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
@@ -140,6 +142,7 @@ export default function CreateEventForm() {
                     name="organizer_name"
                     type="text"
                     placeholder="E.g. Event Pulse Team"
+                    defaultValue={event?.organizer_name}
                   />
                 </div>
               </Field>
@@ -174,6 +177,7 @@ export default function CreateEventForm() {
                   <PopoverContent className="w-auto p-0">
                     <Calendar
                       mode="single"
+                      required
                       selected={date}
                       onSelect={setDate}
                     />
@@ -199,6 +203,7 @@ export default function CreateEventForm() {
                     name="location"
                     type="text"
                     placeholder="E.g. Dhaka,Bangladesh"
+                    defaultValue={event?.location}
                   />
                 </div>
               </Field>
@@ -221,7 +226,33 @@ export default function CreateEventForm() {
                     name="time"
                     type="text"
                     placeholder="E.g. 10 A.M"
+                    defaultValue={event?.time}
                   />
+                </div>
+              </Field>
+
+              <Field>
+                <FieldLabel
+                  htmlFor="title"
+                  className="text-bold text-md text-muted-foreground"
+                >
+                  Event Status
+                </FieldLabel>
+                <div className="">
+                  <Select name="status" defaultValue={event?.event_status}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent className="">
+                      <SelectGroup className="w-full">
+                        <SelectLabel>Status</SelectLabel>
+                        <SelectItem value="OPEN">Open</SelectItem>
+                        <SelectItem value="FULL">Full</SelectItem>
+                        <SelectItem value="CANCELLED">Cancelled</SelectItem>
+                        <SelectItem value="COMPLETED">Completed</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
               </Field>
             </div>
@@ -251,6 +282,7 @@ export default function CreateEventForm() {
                     name="total_capacity"
                     type="number"
                     placeholder="E.g. 500"
+                    defaultValue={event?.total_participants}
                   />
                 </div>
               </Field>
@@ -273,6 +305,7 @@ export default function CreateEventForm() {
                     name="price"
                     type="text"
                     placeholder="E.g. 100"
+                    defaultValue={event?.joining_fee}
                   />
                 </div>
               </Field>
@@ -304,6 +337,7 @@ export default function CreateEventForm() {
                     name="description"
                     id="description"
                     placeholder="Describe about your event"
+                    defaultValue={event?.description}
                   />
                 </div>
               </Field>
@@ -319,11 +353,10 @@ export default function CreateEventForm() {
           variant={"outline"}
           type="submit"
         >
-          
           {isPending ? (
             <Loader className="text-white animate-spin" />
           ) : (
-           <p className="flex items-center gap-2"><Plus /> Create Event</p>
+            <p className="flex items-center gap-2">Update Event Info</p>
           )}
         </Button>
       </div>

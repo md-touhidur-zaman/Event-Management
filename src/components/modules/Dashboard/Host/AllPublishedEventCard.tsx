@@ -11,6 +11,7 @@ import {
 import { IEvent } from "@/types/host.interface";
 import { Calendar, Clock, MapPin, Pencil, Trash } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function AllPublishedEventCard({ event }: { event: IEvent }) {
@@ -54,23 +55,25 @@ export default function AllPublishedEventCard({ event }: { event: IEvent }) {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button
-            onClick={()=>setOpen(true)}
+            onClick={() => setOpen(true)}
             className="bg-[#DC143C] text-white cursor-pointer"
             variant={"outline"}
           >
             View Details
           </Button>
           <div className="flex gap-2">
-            <Button className="font-bold  cursor-pointer" variant={"outline"}>
-              <Pencil />
-            </Button>
+            <Link href={`/host/dashboard/update-event/${event?._id}`}>
+              <Button className="font-bold  cursor-pointer" variant={"outline"}>
+                <Pencil />
+              </Button>
+            </Link>
             <Button className="font-bold cursor-pointer" variant={"outline"}>
               <Trash />
             </Button>
           </div>
         </CardFooter>
       </Card>
-      <EventDetailsModal open={open} setOpen={setOpen} event={event}/>
+      <EventDetailsModal open={open} setOpen={setOpen} event={event} />
     </>
   );
 }

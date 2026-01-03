@@ -1,5 +1,4 @@
 import CreateEventForm from "@/components/modules/Dashboard/Host/CreateEventForm";
-import React from "react";
 
 export default function CreateEventPage() {
   return (

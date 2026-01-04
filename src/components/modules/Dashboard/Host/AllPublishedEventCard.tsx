@@ -18,6 +18,7 @@ import { useState } from "react";
 export default function AllPublishedEventCard({ event }: { event: IEvent }) {
   const [open, setOpen] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const eventDate = new Date(event.date).toDateString()
   return (
     <>
       <Card>
@@ -43,7 +44,7 @@ export default function AllPublishedEventCard({ event }: { event: IEvent }) {
             <div className="flex items-center gap-5">
               <p className="flex items-center gap-2">
                 <Calendar className="text-[#DC143C]" />{" "}
-                {new Date(event?.date).toLocaleDateString()}
+                {eventDate}
               </p>
               <p className="flex items-center gap-2">
                 <Clock className="text-[#DC143C]" />

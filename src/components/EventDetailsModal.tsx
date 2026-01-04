@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { IEvent } from "@/types/host.interface";
 import { Calendar, Clock, MapPin } from "lucide-react";
@@ -24,9 +25,11 @@ export default function EventDetailsModal({
   setOpen,
   event,
 }: IEventDetailsModalProps) {
+  const event_date = new Date(event.date).toDateString()
   return (
     <Dialog open={open}>
       <DialogContent className="flex flex-col gap-0 p-0 sm:max-h-[min(640px,80vh)] sm:max-w-lg [&>button:last-child]:hidden">
+        <DialogTitle/>
         <div className="overflow-y-auto p-2">
           <DialogHeader className="contents space-y-5 text-left">
             <div className="relative h-72 ">
@@ -54,7 +57,7 @@ export default function EventDetailsModal({
               <div className="flex items-center gap-5">
                 <p className="flex items-center gap-2">
                   <Calendar className="text-[#DC143C]" />{" "}
-                  {new Date(event?.date).toLocaleDateString()}
+                  {event_date}
                 </p>
                 <p className="flex items-center gap-2">
                   <Clock className="text-[#DC143C]" />

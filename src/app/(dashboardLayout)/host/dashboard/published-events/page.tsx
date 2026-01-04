@@ -6,13 +6,15 @@ import { IEvent } from '@/types/host.interface'
 
 export default async function PublishedEventsPage() {
   const {data} = await getPublishedEvents()
-  const allPublishedEvents = data?.events
+  const allPublishedEvents = data.events
 
   return (
     <div className='space-y-5 container mx-auto'>
       <h1 className='text-[#DC143C] text-3xl font-bold'>All Events</h1>
       <p>Manage and monitor all your events.</p>
-      <SearchBar/>
+      <div className=''>
+        <SearchBar/>
+      </div>
 
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
         {

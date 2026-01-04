@@ -37,6 +37,7 @@ import {
   Type,
   Users,
 } from "lucide-react";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useActionState, useState } from "react";
 import { toast } from "sonner";
@@ -322,8 +323,14 @@ export default function UpdateEventForm({ event }: { event: IEvent }) {
                 <FieldLabel className="text-md text-muted-foreground">
                   Event Banner
                 </FieldLabel>
-                <div className="">
-                  <SingleImageUploader setImage={setImage} />
+                <div className="flex flex-col md:flex-row justify-between gap-10 ">
+                  <div className="relative  flex-1 border border-[#DC143C] rounded-lg">
+                    <Image className=" p-5" src={event?.image} alt={event?.title} fill style={{objectFit: "contain"}}/>
+
+                  </div>
+                  <div className="md:w-2/3">
+                    <SingleImageUploader setImage={setImage} />
+                  </div>
                 </div>
               </Field>
 

@@ -3,7 +3,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { GetIconComponents } from "@/lib/icon-mapper";
@@ -18,23 +17,26 @@ interface NavItemsProps {
 
 export default function DashboardSideBarContent({ data }: NavItemsProps) {
   return (
-    <SidebarMenu>
+    <SidebarMenu className="space-y-5">
       {data.navMain.map((item) => (
         <SidebarMenuItem key={item.title}>
           <h1 className="text-[#DC143C] font-bold">{item.title}</h1>
 
           {item.items?.length ? (
-            <SidebarMenuSub>
+            <SidebarMenuSub className="space-y-2">
               {item.items.map((item) => {
                 const Icon = GetIconComponents(item.icon);
                 return (
                   <SidebarMenuSubItem key={item.title}>
-                    <SidebarMenuSubButton asChild>
-                      <div>
-                        <Icon />
-                        <Link  href={item.url}>{item.title}</Link>
-                      </div>
-                    </SidebarMenuSubButton>
+                   
+                      <Link
+                        className="flex  items-center gap-2 text-sm"
+                        href={item.url}
+                      >
+                        {" "}
+                        <Icon size={20} /> {item.title}
+                      </Link>
+                    
                   </SidebarMenuSubItem>
                 );
               })}

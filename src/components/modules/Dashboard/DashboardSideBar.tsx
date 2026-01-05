@@ -21,7 +21,7 @@ export async function DashboardSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   const userInfo = await getUserInfo();
-  const navItems = await getSidebarItemsByRole(userInfo?.role);
+  const navItems = await getSidebarItemsByRole(userInfo && 'role' in userInfo ? userInfo.role : undefined);
 
   const data = {
     navMain: navItems,
@@ -36,7 +36,7 @@ export async function DashboardSidebar({
               <Link href="/" className="">
                 <div className="flex items-center gap-2">
                   <Logo />{" "}
-                  <h1 className="text-[#DC143C] font-bold text-lg">
+                  <h1 className="text-[#DC143C] font-bold text-md">
                     <span className="text-[#111827]">Event</span> Management
                   </h1>
                 </div>
@@ -45,7 +45,7 @@ export async function DashboardSidebar({
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent >
         <SidebarGroup>
           <DashboardSideBarContent data={data} />
         </SidebarGroup>
@@ -53,7 +53,7 @@ export async function DashboardSidebar({
       <SidebarFooter>
         <div className="flex gap-3 font-bold">
           <UserCircle />
-          <h1>{userInfo?.name}</h1>
+          <h1>{userInfo && 'name' in userInfo ? userInfo.name : undefined}</h1>
         </div>
         <div>
           <LogoutButton/>

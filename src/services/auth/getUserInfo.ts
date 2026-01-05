@@ -26,9 +26,10 @@ export const getUserInfo = async() =>{
         return userInfo
         
     } catch (error: any) {
-        // eslint-disable-next-line no-console
-        console.log(error)
-        return null
+        return {
+            success:false,
+            message: error?.message
+        }
         
     }
 }

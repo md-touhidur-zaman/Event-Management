@@ -5,7 +5,7 @@ import { IAllEvent } from '@/types/event.interface'
 import Link from 'next/link'
 
 export default async function FeatureEvents() {
-  const {data} = await getAllEventInfo()
+  const {data} = await getAllEventInfo(null)
  
   return (
     <div>

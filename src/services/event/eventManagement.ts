@@ -2,6 +2,7 @@
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch"
+import { IGetEventsParams } from "@/types/event.interface"
 
 export const getEventInfo = async(id: string):Promise<any> =>{
     try {
@@ -19,9 +20,9 @@ export const getEventInfo = async(id: string):Promise<any> =>{
 
 }
 
-export const getAllEventInfo = async():Promise<any> =>{
+export const getAllEventInfo = async(params: IGetEventsParams | null):Promise<any> =>{
     try {
-        const res = await serverFetch.get("/event",{
+        const res = await serverFetch.get(`/event?searchTerm=${params?.searchTerm}&&category=${params?.category}&&location=${params?.location}&&page=${params?.page}`,{
             next: {
                 tags: ["Events"]
             }

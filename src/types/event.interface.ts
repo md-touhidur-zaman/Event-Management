@@ -29,3 +29,10 @@ export interface User {
   phone: string
   picture: string
 }
+
+export interface IGetEventsParams {
+  searchTerm?: string;
+  category?: string;
+  location?: string;
+  page?: string
+}

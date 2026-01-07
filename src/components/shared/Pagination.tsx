@@ -39,7 +39,7 @@ export default function Pagination({ totalPage }: IPaginationProps) {
     <div className="flex justify-center items-center gap-2">
       <div>
         <Button
-          disabled={activePage === 1}
+          disabled={activePage <= 1}
           onClick={() => setActivePage(activePage - 1)}
           className="cursor-pointer"
           variant={"outline"}
@@ -62,7 +62,7 @@ export default function Pagination({ totalPage }: IPaginationProps) {
 
       <div>
         <Button
-          disabled={activePage === totalPage}
+          disabled={activePage >= totalPage}
           onClick={() => setActivePage(activePage + 1)}
           className="cursor-pointer"
           variant={"outline"}

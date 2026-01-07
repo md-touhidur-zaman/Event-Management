@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { serverFetch } from "@/lib/server-fetch";
+import { IParams } from "@/types/host.interface";
 import { revalidateTag } from "next/cache";
 
 export const createEvent = async (
@@ -43,10 +44,10 @@ export const createEvent = async (
   }
 };
 
-export const getPublishedEvents = async () => {
+export const getPublishedEvents = async (params: IParams): Promise<any> => {
   try {
     const res = await serverFetch
-      .get("/host/published-event", {
+      .get(`/host/published-event?searchTerm=${params.searchTerm}&&status=${params.status}&&sortBy=${params.sortBy}`, {
         next: {
           tags: ["Events"],
         },

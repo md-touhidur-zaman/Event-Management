@@ -3,10 +3,21 @@ import SearchBar from '@/components/modules/Dashboard/Host/SearchBar'
 import { getPublishedEvents } from '@/services/host/hostManagement'
 import { IEvent } from '@/types/host.interface'
 
+interface searchParamsProps{
+  searchParams: {
+    searchTerm?: string,
+    status?:string,
+    sortBy?: string
+  }
+}
 
-export default async function PublishedEventsPage() {
-  const {data} = await getPublishedEvents()
-  const allPublishedEvents = data.events
+export default async function PublishedEventsPage({searchParams}: searchParamsProps) {
+  const params = await searchParams
+  
+  
+  const {data} = await getPublishedEvents(params)
+  
+  const allPublishedEvents = data || []
 
   return (
     <div className='space-y-5 container mx-auto'>
@@ -21,6 +32,12 @@ export default async function PublishedEventsPage() {
           allPublishedEvents && allPublishedEvents.map((event: IEvent)=> <AllPublishedEventCard event={event} key={event?._id}/>)
         }
 
+      </div>
+
+      <div className='text-center'>
+        {
+          allPublishedEvents?.length === 0 && <p>No Data Found</p>
+        }
       </div>
 
     </div>

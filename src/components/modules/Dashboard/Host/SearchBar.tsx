@@ -26,23 +26,25 @@ export default function SearchBar() {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPending, startTransition] = useTransition();
-
   const params = new URLSearchParams(searchParams.toString());
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (searchTerm) {
         params.set("searchTerm", searchTerm);
+        params.set("page", "1");
       } else {
         params.delete("searchTerm");
+        // params.set("page", "1")
       }
+
       startTransition(() => {
         router.push(`?${params.toString()}`, { scroll: false });
       });
     }, 500);
 
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, router, searchParams]);
 
   const handelReset = () => {
@@ -71,10 +73,12 @@ export default function SearchBar() {
         <div className="w-full md:w-1/2">
           <Select
             name="status"
-            defaultValue={status}
+            value={status}
             onValueChange={(value) => {
+
               if (value) {
                 params.set("status", value);
+                // params.set("page", "1")
                 router.push(`?${params.toString()}`, { scroll: false });
                 setStatus(value);
               } else {
@@ -100,10 +104,11 @@ export default function SearchBar() {
         <div className="w-full md:w-1/2">
           <Select
             name="sortBy"
-            defaultValue={sortBy}
+            value={sortBy}
             onValueChange={(value) => {
               if (value) {
                 params.set("sortBy", value);
+                // params.set("page", "1")
                 router.push(`?${params.toString()}`, { scroll: false });
                 setSortBy(value);
               } else {

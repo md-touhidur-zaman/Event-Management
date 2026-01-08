@@ -57,7 +57,6 @@ export default function ExploreEventSearchBar() {
     setSearchTerm("");
     setCategory("");
     setLocation("");
-
     router.replace("?", { scroll: false });
   };
   return (

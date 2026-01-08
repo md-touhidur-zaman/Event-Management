@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IAllEvent } from "@/types/event.interface";
+import Link from "next/link";
 
 export function EventCard({ event }: { event: IAllEvent }) {
   const eventDate = new Date(event?.date).toDateString();
@@ -24,7 +25,12 @@ export function EventCard({ event }: { event: IAllEvent }) {
 
         <div className="space-y-3">
           <h1 className="text-xl font-bold">{event?.title}</h1>
-          <p className="text-muted-foreground text-lg">Category: <span className="font-bold text-sm">{(event?.category).toUpperCase()}</span></p>
+          <p className="text-muted-foreground text-lg">
+            Category:{" "}
+            <span className="font-bold text-sm">
+              {(event?.category).toUpperCase()}
+            </span>
+          </p>
           <div className="space-y-2 flex justify-between items-center">
             <p className="flex justify-center items-center gap-2">
               <Calendar className="text-[#DC143C]" /> {eventDate}
@@ -38,12 +44,14 @@ export function EventCard({ event }: { event: IAllEvent }) {
           </p>
         </div>
 
-        <Button
-          className="w-full border border-[#DC143C] text-[#DC143C]"
-          variant="outline"
-        >
-          Book Now
-        </Button>
+        <Link href={`/events/event-details/${event._id}`}>
+          <Button
+            className="w-full border border-[#DC143C] text-[#DC143C] cursor-pointer"
+            variant="outline"
+          >
+            Book Now
+          </Button>
+        </Link>
       </CardContent>
     </Card>
   );

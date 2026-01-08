@@ -7,7 +7,6 @@ import { IGetEventsParams } from "@/types/event.interface"
 export const getEventInfo = async(id: string):Promise<any> =>{
     try {
         const res = await serverFetch.get(`/event/${id}`).then((res)=>res.json())
-
         return res
 
     } catch (error:any) {
@@ -37,3 +36,4 @@ export const getAllEventInfo = async(params: IGetEventsParams | null):Promise<an
         
     }
 }
+

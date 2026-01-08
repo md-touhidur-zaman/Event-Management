@@ -18,6 +18,7 @@ export const getUserInfo = async() =>{
         }
 
         const userInfo = {
+            userId: verifiedToken?.userId,
             name: verifiedToken?.name,
             email: verifiedToken?.email,
             role: verifiedToken?.role

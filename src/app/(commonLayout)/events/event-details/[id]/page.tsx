@@ -1,7 +1,14 @@
 import EventBooking from "@/components/modules/Event/EventBooking";
 import { getEventInfo } from "@/services/event/eventManagement";
 import { IAllEvent } from "@/types/event.interface";
-import { Calendar, Clock1, MapPin, UserCircle } from "lucide-react";
+import {
+  Calendar,
+  Clock1,
+  MapPin,
+  Ticket,
+  UserCircle,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
 
 export default async function EventDetailsPage({
@@ -13,12 +20,11 @@ export default async function EventDetailsPage({
   const { data } = await getEventInfo(id);
   const eventInfo = data as IAllEvent;
   const date = new Date(eventInfo?.date).toDateString();
-  
 
   return (
     <div className="container mx-auto my-10">
       <div className="relative">
-        <div className="relative h-80 border-2 rounded-lg">
+        <div className="relative h-80 border-2 border-[#DC143C] rounded-lg ">
           <Image
             className="p-5"
             src={eventInfo?.image}
@@ -28,8 +34,8 @@ export default async function EventDetailsPage({
           />
         </div>
 
-        <div className="flex flex-col md:flex-row justify-center   gap-10 ">
-          <div className="space-y-5 z-20 md:2/3">
+        <div className="flex flex-col md:flex-row justify-center   gap-5 ">
+          <div className="space-y-5 z-20 md:w-2/3">
             <div className="px-10 py-8 flex flex-col justify-center border-2 rounded-lg shadow-2xl mx-10  bg-white -mt-20  space-y-5">
               <p className="text-sm text-muted-foreground bg-pink-200 w-28 text-center rounded-lg py-1 px-2">
                 {eventInfo.category.toUpperCase()}
@@ -65,6 +71,19 @@ export default async function EventDetailsPage({
                   </div>
                 </div>
               </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Users className="text-[#DC143C]"/>
+                  <p className="text-lg">Capacity: <span className="font-bold text-xl">{eventInfo?.total_participants}</span> person</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Ticket className="text-[#DC143C]" />
+                  <p className="text-lg">
+                    Total Participants Till Now: <span className="font-bold text-xl">{eventInfo?.total_no_of_booking}</span>{" "}
+                    person
+                  </p>
+                </div>
+              </div>
 
               <div>
                 <h1 className="text-xl font-bold">About This Event</h1>
@@ -79,17 +98,26 @@ export default async function EventDetailsPage({
               <hr />
               <div className="flex items-center gap-5">
                 <div className="relative h-20 w-20 rounded-full flex justify-center items-center border border-[#DC143C]">
-                  {
-                    eventInfo?.host?.user?.picture ? <Image className="rounded-full p-2" src={eventInfo?.host?.user?.picture} alt="" fill style={{objectFit: "cover"}}/> : <UserCircle className="text-[#DC143C]" size={40}/>
-                   }
+                  {eventInfo?.host?.user?.picture ? (
+                    <Image
+                      className="rounded-full p-2"
+                      src={eventInfo?.host?.user?.picture}
+                      alt=""
+                      fill
+                      style={{ objectFit: "cover" }}
+                    />
+                  ) : (
+                    <UserCircle className="text-[#DC143C]" size={40} />
+                  )}
                 </div>
 
                 <div>
-                  <h1 className="font-bold">{(eventInfo?.host?.user?.name).toUpperCase()}</h1>
+                  <h1 className="font-bold">
+                    {(eventInfo?.host?.user?.name).toUpperCase()}
+                  </h1>
                   <p className="text-muted-foreground text-sm">Organizer</p>
                 </div>
               </div>
-
             </div>
           </div>
 

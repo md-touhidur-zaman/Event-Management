@@ -2,7 +2,7 @@
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch"
-import { IGetEventsParams } from "@/types/event.interface"
+import { IEventBookingPayload, IGetEventsParams } from "@/types/event.interface"
 
 export const getEventInfo = async(id: string):Promise<any> =>{
     try {
@@ -29,6 +29,28 @@ export const getAllEventInfo = async(params: IGetEventsParams | null):Promise<an
         return res
         
     } catch (error:any) {
+        return {
+            success:false,
+            message: error?.message
+        }
+        
+    }
+}
+
+export const bookingEvent = async(bookingPayload: IEventBookingPayload) =>{
+    console.log()
+  
+    try {
+        const res = await serverFetch.post("/booking/create-booking", {
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(bookingPayload)
+        }).then((res)=> res.json())
+
+        return res
+        
+    } catch (error: any) {
         return {
             success:false,
             message: error?.message

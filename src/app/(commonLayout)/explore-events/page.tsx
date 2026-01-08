@@ -16,7 +16,7 @@ interface ISearchParamsProps{
 export default async function ExploreEventPage({searchParams}:ISearchParamsProps ) {
   const params = await searchParams
   const {data} = await getAllEventInfo(params)
-  const allEvents = data?.events || []
+  const allEvents = data?.events
   const itemPerPage = 3 
   const totalPage = Math.ceil(data?.totalEvents/itemPerPage)
   return (

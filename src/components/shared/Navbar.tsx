@@ -24,9 +24,13 @@ const navigationLinks = [
 ];
 
 export default async function Navbar() {
-  const accessToken = await getCookie("accessToken")
-  const userInfo = await getUserInfo()
-  const dashboardHome = userInfo && 'role' in userInfo ? await getDefaultDashboardRoutes(userInfo.role) : "/login"
+  const accessToken = await getCookie("accessToken");
+  const userInfo = await getUserInfo();
+  const dashboardHome =
+    userInfo && "role" in userInfo
+      ? await getDefaultDashboardRoutes(userInfo.role)
+      : "/login";
+  const userRole = userInfo && "role" in userInfo ? userInfo?.role : "";
 
   return (
     <header className="border-b px-4 md:px-6 container mx-auto">
@@ -126,17 +130,25 @@ export default async function Navbar() {
         </div>
 
         {/* Right side */}
-        <div >
+        <div>
           {accessToken ? (
             <div className="flex items-center gap-2">
-            
               <Button
+                hidden={userRole !== "USER"}
                 className="text-sm cursor-pointer"
                 disabled={!accessToken}
               >
                 Become a host
               </Button>
-              <ProfileButton name={userInfo && 'name' in userInfo ? userInfo?.name : "Unknown User"} role={userInfo && 'role' in userInfo? userInfo?.role: null} dashboardHome={dashboardHome}/>
+              <ProfileButton
+                name={
+                  userInfo && "name" in userInfo
+                    ? userInfo?.name
+                    : "Unknown User"
+                }
+                role={userInfo && "role" in userInfo ? userInfo?.role : null}
+                dashboardHome={dashboardHome}
+              />
             </div>
           ) : (
             <Button

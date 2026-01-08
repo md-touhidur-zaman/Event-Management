@@ -6,18 +6,19 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 
 interface IPaginationProps {
-  totalPage: number;
+  totalPage: number ;
 }
 
 export default function Pagination({ totalPage }: IPaginationProps) {
   const paginatedArray = [...Array(totalPage).keys()];
+
+  console.log(paginatedArray);
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activePage, setActivePage] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPending, startTransition] = useTransition();
-
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -33,7 +34,7 @@ export default function Pagination({ totalPage }: IPaginationProps) {
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [activePage,setActivePage, router,searchParams]);
+  }, [activePage, setActivePage, router, searchParams]);
 
   return (
     <div className="flex justify-center items-center gap-2">
@@ -47,18 +48,19 @@ export default function Pagination({ totalPage }: IPaginationProps) {
           Previous
         </Button>
       </div>
-      {paginatedArray.map((page, i) => (
-        <Button
-          onClick={() => setActivePage(i + 1)}
-          variant={"outline"}
-          className={cn("cursor-pointer", {
-            "bg-[#DC143C] text-white": page + 1 === activePage,
-          })}
-          key={i}
-        >
-          {page + 1}
-        </Button>
-      ))}
+      {paginatedArray &&
+        paginatedArray?.map((page, i) => (
+          <Button
+            onClick={() => setActivePage(i + 1)}
+            variant={"outline"}
+            className={cn("cursor-pointer", {
+              "bg-[#DC143C] text-white": page + 1 === activePage,
+            })}
+            key={i}
+          >
+            {page + 1}
+          </Button>
+        ))}
 
       <div>
         <Button

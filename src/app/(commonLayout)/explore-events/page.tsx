@@ -16,9 +16,10 @@ interface ISearchParamsProps{
 export default async function ExploreEventPage({searchParams}:ISearchParamsProps ) {
   const params = await searchParams
   const {data} = await getAllEventInfo(params)
-  const allEvents = data?.events
+  const allEvents = data?.events || []
   const itemPerPage = 3 
-  const totalPage = Math.ceil(data?.totalEvents/itemPerPage)
+  const totalPage = Math.ceil((data?.totalEvents)/itemPerPage)
+  
   return (
     <div className='container mx-auto my-10 space-y-10'>
       <div className="">
@@ -26,7 +27,7 @@ export default async function ExploreEventPage({searchParams}:ISearchParamsProps
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10 p-2 lg:p-0">
         {
-          allEvents && allEvents.map((event: IAllEvent)=> <EventCard key={event._id} event={event}/>)
+          allEvents && allEvents?.map((event: IAllEvent)=> <EventCard key={event._id} event={event}/>)
         }
       </div>
 

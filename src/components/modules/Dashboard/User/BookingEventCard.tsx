@@ -17,7 +17,7 @@ import { redirect } from "next/navigation";
 
 export default function BookingEventCard({ event }: {event: IBookingEvent}) {
   const [open, setOpen] = useState(false);
-  const eventDate = new Date(event.event.date).toDateString()
+  const eventDate = new Date(event?.event?.date).toDateString()
 
   const handelInitPayment = async() =>{
     const res = await initPayment(event?._id)

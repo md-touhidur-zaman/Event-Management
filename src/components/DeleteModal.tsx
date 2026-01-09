@@ -18,11 +18,12 @@ import { Label } from "@/components/ui/label";
 import { IEvent } from "@/types/host.interface";
 import { deleteEvent } from "@/services/host/hostManagement";
 import { toast } from "sonner";
+import { IAdminEvent } from "@/types/admin.interface";
 
 interface IDeleteModalProps {
   setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
   openDeleteModal: boolean;
-  event: IEvent;
+  event: IEvent | IAdminEvent;
 }
 
 export default function DeleteModal({

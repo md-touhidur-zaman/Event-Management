@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Field,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSet,
@@ -47,6 +48,14 @@ export default function CreateEventForm() {
 
   const [state, formAction, isPending] = useActionState(createEvent, null);
 
+  const getErrorFieldMessage = (fieldName: string) => {
+    if (state && state?.errors) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const error = state.errors.find((err: any) => err.field === fieldName);
+      return error?.message;
+    }
+  };
+
   const onSubmit = (formData: FormData) => {
     if (date) {
       formData.append("event_date", date.toISOString());
@@ -59,12 +68,12 @@ export default function CreateEventForm() {
   };
 
   useEffect(() => {
-    if (state?.success===true) {
+    if (state?.success === true) {
       toast.success("Your event has been published");
       redirect("/host/dashboard/published-events");
     }
-    if(state?.success===false){
-      toast.error(state?.message)
+    if (state?.success === false && !state.errors) {
+      toast.error(state?.message);
     }
   }, [state]);
 
@@ -95,6 +104,9 @@ export default function CreateEventForm() {
                   type="text"
                   placeholder="E.g. Annual Tech Conference 2026"
                 />
+                {getErrorFieldMessage("title") && (
+                  <FieldError>{getErrorFieldMessage("title")}</FieldError>
+                )}
               </div>
             </Field>
 
@@ -126,6 +138,9 @@ export default function CreateEventForm() {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
+                {getErrorFieldMessage("category") && (
+                  <FieldError>{getErrorFieldMessage("category")}</FieldError>
+                )}
               </Field>
               <Field>
                 <FieldLabel
@@ -146,6 +161,9 @@ export default function CreateEventForm() {
                     type="text"
                     placeholder="E.g. Event Pulse Team"
                   />
+                  {getErrorFieldMessage("organizer_name") && (
+                  <FieldError>{getErrorFieldMessage("organizer_name")}</FieldError>
+                )}
                 </div>
               </Field>
             </div>
@@ -205,6 +223,9 @@ export default function CreateEventForm() {
                     type="text"
                     placeholder="E.g. Dhaka,Bangladesh"
                   />
+                  {getErrorFieldMessage("location") && (
+                  <FieldError>{getErrorFieldMessage("location")}</FieldError>
+                )}
                 </div>
               </Field>
 
@@ -227,6 +248,9 @@ export default function CreateEventForm() {
                     type="text"
                     placeholder="E.g. 10 A.M"
                   />
+                  {getErrorFieldMessage("time") && (
+                  <FieldError>{getErrorFieldMessage("time")}</FieldError>
+                )}
                 </div>
               </Field>
             </div>
@@ -257,6 +281,9 @@ export default function CreateEventForm() {
                     type="number"
                     placeholder="E.g. 500"
                   />
+                  {getErrorFieldMessage("total_participants") && (
+                  <FieldError>{getErrorFieldMessage("total_participants")}</FieldError>
+                )}
                 </div>
               </Field>
 
@@ -279,6 +306,9 @@ export default function CreateEventForm() {
                     type="text"
                     placeholder="E.g. 100"
                   />
+                  {getErrorFieldMessage("joining_fee") && (
+                  <FieldError>{getErrorFieldMessage("joining_fee")}</FieldError>
+                )}
                 </div>
               </Field>
             </div>
@@ -310,6 +340,9 @@ export default function CreateEventForm() {
                     id="description"
                     placeholder="Describe about your event"
                   />
+                  {getErrorFieldMessage("description") && (
+                  <FieldError>{getErrorFieldMessage("description")}</FieldError>
+                )}
                 </div>
               </Field>
             </div>

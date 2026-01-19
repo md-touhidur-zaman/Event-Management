@@ -30,20 +30,18 @@ export default function Footer() {
         <div className="space-y-5">
           <h1 className="text-xl font-bold">Discover</h1>
           <div className="flex flex-col space-y-2">
-            <Link href="#">Concerts & Gigs</Link>
-            <Link href="#">Festivals</Link>
-            <Link href="#">Workshops</Link>
-            <Link href="#">Sports</Link>
+            <Link href="/explore-events">Explore Events</Link>
+            <Link href="/profile">Profile</Link>
+            
           </div>
         </div>
 
         <div className="space-y-5">
           <h1 className="text-xl font-bold">Company</h1>
           <div className="flex flex-col space-y-2">
-            <Link href="#">About us</Link>
-            <Link href="#">Careers</Link>
-            <Link href="#">Blog</Link>
-            <Link href="#">Contact</Link>
+            <Link href="/about">About</Link>
+            <Link href="/contact-us">Contact Us</Link>
+            <Link href="/faq">FAQ</Link>
           </div>
         </div>
 
@@ -51,16 +49,16 @@ export default function Footer() {
           <h1 className="text-xl font-bold">Contact</h1>
           <div className="flex space-x-5">
             <div className="h-10 w-10 bg-muted-foreground/60 flex justify-center items-center rounded-full">
-              <Facebook/>
+              <a href="https://www.facebook.com"><Facebook/></a>
             </div>
             <div className="h-10 w-10 bg-muted-foreground/60 flex justify-center items-center rounded-full">
-              <Twitter/>
+              <a href="https://x.com"><Twitter/></a>
             </div>
             <div className="h-10 w-10 bg-muted-foreground/60 flex justify-center items-center rounded-full">
-              <Instagram/>
+              <a href="https://www.instagram.com"><Instagram/></a>
             </div>
             <div className="h-10 w-10 bg-muted-foreground/60 flex justify-center items-center rounded-full">
-              <Linkedin/>
+              <a href="https://www.linkedin.com"><Linkedin/></a>
             </div>
           </div>
 

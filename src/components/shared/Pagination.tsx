@@ -7,9 +7,10 @@ import { useEffect, useState, useTransition } from "react";
 
 interface IPaginationProps {
   totalPage: number;
+  size?: number
 }
 
-export default function Pagination({ totalPage }: IPaginationProps) {
+export default function Pagination({ totalPage, size }: IPaginationProps) {
   const paginatedArray = [...Array(totalPage).keys()];
 
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function Pagination({ totalPage }: IPaginationProps) {
       const params = new URLSearchParams(searchParams.toString());
       if (activePage) {
         params.set("page", activePage.toString());
+        params.set("size", size?.toString() as string)
         router.push(`?${params.toString()}`);
       }
 
@@ -32,7 +34,7 @@ export default function Pagination({ totalPage }: IPaginationProps) {
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [activePage, setActivePage, router, searchParams]);
+  }, [activePage, setActivePage, router, searchParams,size]);
 
   return (
     <div className="flex justify-center items-center gap-2">

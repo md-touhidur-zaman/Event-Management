@@ -18,7 +18,7 @@ export default async function AllEventsPage({searchParams}: searchParamsProps) {
     const {data} = await getAllEventInfo(params)
     const allEventsInfo = data?.events
     const totalEvents = data?.totalEvents
-    const totalPage = Math.ceil(totalEvents/3)
+    const totalPage = Math.ceil(totalEvents/4)
     
 
   return (
@@ -32,7 +32,7 @@ export default async function AllEventsPage({searchParams}: searchParamsProps) {
             <SearchBar/>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {
                 allEventsInfo && allEventsInfo?.map((event: IAdminEvent)=><AllEventCard key={event._id} event={event}/>)
             }
@@ -40,7 +40,7 @@ export default async function AllEventsPage({searchParams}: searchParamsProps) {
         </div>
 
         <div>
-            <Pagination totalPage={totalPage}/>
+            <Pagination totalPage={totalPage} size={4}/>
         </div>
 
 

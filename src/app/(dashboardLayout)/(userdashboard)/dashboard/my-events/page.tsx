@@ -3,12 +3,12 @@ import Pagination from "@/components/shared/Pagination"
 import { myBookingEvent } from "@/services/event/eventManagement"
 import { IBookingEvent } from "@/types/user.interface"
 
-export default async function MyEventPage({searchParams}: {searchParams: {page?:string}}) {
+export default async function MyEventPage({searchParams}: {searchParams: {page?:string, size:string}}) {
   const params = await searchParams 
-  const {data} = await myBookingEvent({page: params.page || '1'})
+  const {data} = await myBookingEvent({page: params.page || '1', size: params.size})
   const bookingsInfo = data?.events
   const totalBookings = data?.totalBookings || 0
-  const itemPerPage = 3
+  const itemPerPage = 4
   const totalPage = Math.ceil(totalBookings/itemPerPage)
  
   return (
@@ -18,13 +18,13 @@ export default async function MyEventPage({searchParams}: {searchParams: {page?:
           <p className="text-muted-foreground">Explore your booking event</p>
         </div>
 
-        <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
+        <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mt-10">
           {
             bookingsInfo && bookingsInfo?.map((event: IBookingEvent)=> <BookingEventCard key={event._id} event={event}/>)
           }
         </div>
         <div className="mt-3">
-          <Pagination totalPage={totalPage}/>
+          <Pagination totalPage={totalPage} size={4}/>
         </div>
     </div>
   )

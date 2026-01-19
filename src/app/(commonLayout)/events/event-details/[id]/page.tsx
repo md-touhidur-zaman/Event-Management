@@ -18,6 +18,7 @@ export default async function EventDetailsPage({
 }) {
   const { id } = await params;
   const { data } = await getEventInfo(id);
+ 
   const eventInfo = data as IAllEvent;
   const date = new Date(eventInfo?.date).toDateString();
   
@@ -31,7 +32,7 @@ export default async function EventDetailsPage({
           <Image
             className="p-5"
             src={eventInfo?.image}
-            alt={eventInfo.title}
+            alt={eventInfo?.title}
             fill
             style={{ objectFit: "cover" }}
           />
@@ -43,7 +44,7 @@ export default async function EventDetailsPage({
               <p className="text-sm text-muted-foreground bg-pink-200 w-28 text-center rounded-lg py-1 px-2">
                 {category}
               </p>
-              <h1 className="text-3xl font-bold">{eventInfo.title}</h1>
+              <h1 className="text-3xl font-bold">{eventInfo?.title}</h1>
               <div className="flex flex-col md:flex-row md:items-center justify-center md:justify-between gap-5">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-full bg-pink-200 flex justify-center items-center">

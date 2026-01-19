@@ -21,10 +21,10 @@ export default async function FeatureEvents() {
         </div>
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10 p-2 lg:p-0'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 my-10 p-2 lg:p-0'>
         
         {
-          allEvents && allEvents?.slice(0,3).map((event: IAllEvent)=> <EventCard key={event._id} event={event}/>)
+          allEvents && allEvents?.slice(0,4).map((event: IAllEvent)=> <EventCard key={event._id} event={event}/>)
         }
       </div>
 

@@ -20,7 +20,7 @@ export default async function PublishedEventsPage({searchParams}: searchParamsPr
 
   
   const allPublishedEvents = data?.events || []
-  const itemsPerPage = 3
+  const itemsPerPage = 4
   const totalPage = Math.ceil((data?.totalEvents)/itemsPerPage)
 
   
@@ -33,7 +33,7 @@ export default async function PublishedEventsPage({searchParams}: searchParamsPr
         <SearchBar/>
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10'>
         {
           allPublishedEvents && allPublishedEvents.map((event: IEvent)=> <AllPublishedEventCard event={event} key={event?._id}/>)
         }
@@ -47,7 +47,7 @@ export default async function PublishedEventsPage({searchParams}: searchParamsPr
       </div>
 
       <div>
-        <Pagination totalPage={totalPage}/>
+        <Pagination totalPage={totalPage} size={4}/>
       </div>
 
     </div>

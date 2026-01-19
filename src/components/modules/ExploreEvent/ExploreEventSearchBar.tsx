@@ -30,6 +30,7 @@ export default function ExploreEventSearchBar() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
+      
       if (searchTerm) {
         params.set("searchTerm", searchTerm);
         // params.set("page", "1");

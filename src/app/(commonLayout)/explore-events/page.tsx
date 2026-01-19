@@ -9,16 +9,17 @@ interface ISearchParamsProps{
     searchTerm?: string,
     category?:string,
     location?: string,
-    page?:string
+    page?:string,
+    size?: string
   }
 } 
 
 export default async function ExploreEventPage({searchParams}:ISearchParamsProps ) {
   const params = await searchParams
   const {data} = await getAllEventInfo(params)
-  const allEvents = data?.events || []
+  const allEvents = await data?.events || []
   const totalEvents = data?.totalEvents ?? 0
-  const itemPerPage = 3 
+  const itemPerPage = 4
   const totalPage = Math.ceil((totalEvents)/itemPerPage)
   
   return (
@@ -26,7 +27,7 @@ export default async function ExploreEventPage({searchParams}:ISearchParamsProps
       <div className="">
         <ExploreEventSearchBar/>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10 p-2 lg:p-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 my-10 p-2 lg:p-0">
         {
           allEvents && allEvents?.map((event: IAllEvent)=> <EventCard key={event._id} event={event}/>)
         }
@@ -39,7 +40,7 @@ export default async function ExploreEventPage({searchParams}:ISearchParamsProps
       </div>
 
       <div>
-        <Pagination totalPage={totalPage}/>
+        <Pagination totalPage={totalPage} size={4}/>
       </div>
 
 

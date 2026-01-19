@@ -35,6 +35,7 @@ export interface IGetEventsParams {
   category?: string;
   location?: string;
   page?: string;
+  size?: string
 }
 
 export interface IEventBookingPayload {

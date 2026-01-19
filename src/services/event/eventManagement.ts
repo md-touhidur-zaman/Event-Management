@@ -10,6 +10,7 @@ import { revalidateTag } from "next/cache";
 
 export const getEventInfo = async (id: string): Promise<any> => {
   try {
+    
     const res = await serverFetch.get(`/event/${id}`).then((res) => res.json());
     return res;
   } catch (error: any) {
@@ -26,7 +27,7 @@ export const getAllEventInfo = async (
   try {
     const res = await serverFetch
       .get(
-        `/event?searchTerm=${params?.searchTerm}&&category=${params?.category}&&location=${params?.location}&&page=${params?.page}`,
+        `/event?searchTerm=${params?.searchTerm}&&category=${params?.category}&&location=${params?.location}&&page=${params?.page}&&size=${params?.size}`,
         {
           next: {
             tags: ["Events"],
@@ -67,12 +68,12 @@ export const bookingEvent = async (bookingPayload: IEventBookingPayload) => {
   }
 };
 
-export const myBookingEvent = async (params: {page: string}) => {
+export const myBookingEvent = async (params: {page: string, size:string}) => {
 
   try {
     
     const res = await serverFetch
-      .get(`/booking/my-bookings?page=${params?.page}`, {
+      .get(`/booking/my-bookings?page=${params?.page}&&size=${params?.size}`, {
         next: {
           tags: ["MyBookings"],
         },

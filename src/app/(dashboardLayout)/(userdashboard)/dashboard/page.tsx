@@ -9,11 +9,11 @@ import Link from "next/link";
 export default async function UserDashboardPage({
   params,
 }: {
-  params: { page: string };
+  params: { page: string, size:string };
 }) {
   const { data } = await userStatsInfo();
   const { data: eventsInfo } = await myBookingEvent({
-    page: params.page || "1",
+    page: params.page || "1", size: "4"
   });
   const bookingsInfo = eventsInfo?.events;
 
@@ -86,10 +86,10 @@ export default async function UserDashboardPage({
           <Button className="border border-[#DC143C]" variant={"outline"}>Show All</Button>
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-2 md:p-0  gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-2 md:p-0  gap-10">
           {bookingsInfo &&
             bookingsInfo
-              .slice(0, 3)
+              .slice(0, 4)
               .map((event: IBookingEvent) => (
                 <BookingEventCard key={event?._id} event={event} />
               ))}

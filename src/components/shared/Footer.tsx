@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../../../public/assets/logo/Logo";
 import Link from "next/link";
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Instagram, Linkedin, MapPin, Phone, Twitter } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
@@ -25,6 +25,18 @@ export default function Footer() {
             unforgettable experiences. Discover, <br />
             book, and host events seamlessly.
           </p>
+
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Phone className="text-[#DC143C]"/>
+              <p>+1 (555) 123-4567</p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <MapPin className="text-[#DC143C]"/>
+              <p>123 Event Street, Suite 100 San <br /> Francisco, CA 94103</p>
+            </div>
+          </div>
         </div>
 
         <div className="space-y-5">
